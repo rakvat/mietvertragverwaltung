@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Prename:</strong>
+  <%= @tenant.prename %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tenant.name %>
+</p>
+
+<p>
+  <strong>Current street no:</strong>
+  <%= @tenant.current_street_no %>
+</p>
+
+<p>
+  <strong>Current zip code city:</strong>
+  <%= @tenant.current_zip_code_city %>
+</p>
+
+<%= link_to 'Edit', edit_tenant_path(@tenant) %> |
+<%= link_to 'Back', tenants_path %>
