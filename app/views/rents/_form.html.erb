@@ -21,11 +21,11 @@
   </div>
   <div class="field">
     <%= f.label :room_id %><br>
-    <%= f.text_field :room_id %>
+    <%= f.select("room_id", Room.all.collect {|r| [ RoomsHelper::label(r), r.id ] }, { include_blank: true }) %>
   </div>
   <div class="field">
     <%= f.label :tenant_id %><br>
-    <%= f.text_field :tenant_id %>
+    <%= f.select("tenant_id", Tenant.all.collect {|t| [ TenantsHelper::label(t), t.id ] }, { include_blank: true }) %>
   </div>
   <div class="actions">
     <%= f.submit %>

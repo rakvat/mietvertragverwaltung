@@ -18,8 +18,8 @@
       <tr>
         <td><%= rent.start %></td>
         <td><%= rent.basic_rent %></td>
-        <td><%= "#{rent.room.house}, #{rent.room.floor_short}, Zimmer #{rent.room.number}" %></td>
-        <td><%= "#{rent.tenant.prename} #{rent.tenant.name}" %></td>
+        <td><%= RoomsHelper::label(rent.room) %></td>
+        <td><%= TenantsHelper::label(rent.tenant) %></td>
         <td><%= link_to 'Show', rent %></td>
         <td><%= link_to 'Edit', edit_rent_path(rent) %></td>
         <td><%= link_to 'Destroy', rent, method: :delete, data: { confirm: 'Are you sure?' } %></td>

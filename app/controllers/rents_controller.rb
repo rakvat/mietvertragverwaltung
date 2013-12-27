@@ -17,8 +17,6 @@ class RentsController < ApplicationController
 
   # GET /rents/1/edit
   def edit
-    @rooms = Room.all
-    @tenants = Tenant.all
   end
 
   # POST /rents

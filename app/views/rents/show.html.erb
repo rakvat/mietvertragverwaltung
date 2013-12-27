@@ -12,12 +12,12 @@
 
 <p>
   <strong>Room:</strong>
-  <%= @rent.room %>
+  <%= RoomsHelper::label(@rent.room) %>
 </p>
 
 <p>
   <strong>Tenant:</strong>
-  <%= @rent.tenant %>
+  <%= TenantsHelper::label(@rent.tenant) %>
 </p>
 
 <%= link_to 'Edit', edit_rent_path(@rent) %> |
