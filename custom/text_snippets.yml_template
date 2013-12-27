@@ -3,9 +3,13 @@ gmbh_street_no: "Musterstraße 23"
 gmbh_zipcode: "12345"
 gmbh_city: "Berlin"
 
-bank_name: "GLS-Bank"
-bank_account_info: "BLZ 43060967 Konto-Nr.: 1123596400"
+gmbh_bank_name: "GLS-Bank"
+gmbh_bank_account_info_blz: "43060967"
+gmbh_bank_account_info_no: "1123596400"
 gmbh_executive_board: "Anna Arthur, Benni Besen"
 gmbh_register_number: "HRB 123456 B"
 gmbh_tax_number: "27/002/12345"
 
+rooms_location: "Zur Benutzung als Wohnraum werden auf dem Grundstück Musterstraße 23 in 12345 Berlin die in den Gebäuden gelegenen Räume vermietet, und zwar:"
+rooms_rent_type: "Es besteht Einzelzimmervermietung.
+Gemeinschaftsbereiche, Garten und Keller werden von der_dem Mieter_in mitgenutzt. Die Gebäude haben insgesamt ??? m² Wohnfläche."

@@ -3,36 +3,87 @@ class PdfRentContract < Prawn::Document
   IMAGE_WITH = 180
   IMAGE_HEIGHT = 52
   ADDRESS_Y_POS = 110
+  LINE_HEIGHT = 10
+  PARAGRAPH_HEIGHT = 15
+  BELOW_HEADER_HEIGHT = 5
 
   def header(contract)
     x_pos = bounds.width-IMAGE_WITH
-    y_pos = cursor
+    y_pos = cursor + 20
     image "#{Rails.root}/custom/logo.png", at: [x_pos, y_pos], 
                                            width: IMAGE_WITH
     text "M   I   E   T   V   E   R   T   R   A   G", size: 14, style: :bold
-    move_down 5
+    move_down LINE_HEIGHT
     text "Mietvertragnummer: #{contract.start.year}-#{contract.start.month}/#{contract.room.house.first}/#{contract.room.number}", size: 8
     move_down 15
     text "Zwischen"
-    move_down 5
+    move_down LINE_HEIGHT
     text "der <b>#{@texts['gmbh_name']}</b>, #{@texts['gmbh_street_no']}, #{@texts['gmbh_zip_code']} #{@texts['gmbh_city']} - als Vermieterin -", inline_format: true
-    move_down 5
+    move_down LINE_HEIGHT
     text "und <b>#{contract.tenant.prename} #{contract.tenant.name}</b>, derzeit #{contract.tenant.current_street_no}, #{contract.tenant.current_zip_code_city} - als Mieter_in -", inline_format: true
     move_down 10
     text "wird folgender Mietvertrag geschlossen:"
+    move_down 20
   end
 
   def left_column(contract)
+    bounding_box [0, @column_y], width: @width/2.0 do
+      text "1. Mieträume", style: :bold
+      move_down BELOW_HEADER_HEIGHT
+      text @texts['rooms_location']
+      move_down LINE_HEIGHT
+      text RoomsHelper::label(contract.room), style: :bold
+      text "Größe: #{contract.room.square_meters} m²", style: :bold
+      move_down LINE_HEIGHT
+      text @texts['rooms_rent_type']
+      move_down PARAGRAPH_HEIGHT
+
+      text "2. Mietzeit", style: :bold
+      move_down BELOW_HEADER_HEIGHT
+      text "Das Mietverhältnis ist von unbestimmter Dauer und beginnt mit dem <b>#{contract.start}</b>", inline_format: true
+      text "Es kann von beiden Vertragsparteien im Rahmen der gesetzlichen Bestimmungen und Fristen gekündigt werden, falls nichts anderes vereinbart ist."
+      move_down PARAGRAPH_HEIGHT
+
+      text "3. Miete", style: :bold
+      move_down BELOW_HEADER_HEIGHT
+      text "Die Nettokaltmiete beträgt monatlich: <b>#{contract.basic_rent} €</b>", inline_format: true
+      move_down LINE_HEIGHT
+      text "Zusätzlich ist eine monatliche Vorauszahlung für Heiz- und Nebenkosten zu entrichten:"
+      move_down LINE_HEIGHT
+      text "Heizung/Warmwasser: #{contract.heating_charges} €"
+      text "Sonstige Nebenkosten: #{contract.assessory_charges} €"
+      text "Summe Nebenkosten: <b>#{contract.sum_assessory_charges} €</b>", inline_format: true
+      move_down LINE_HEIGHT
+      text "Gesamtmiete: #{contract.sum_rent} €", style: :bold
+    end
   end
 
   def right_column(contract)
+    bounding_box [@width/2.0 + 20, @column_y], width: @width/2.0 do
+      text "Die Nebenkosten werden anteilig in Höhe der tatsächlich entstandenen Kosten jährlich abgerechnet und auf die Mieter_innen umgelegt unter Anrechnung der monatlichen Vorauszahlungen."
+      text "Nettokaltmiete und Nebenkosten (Gesamtmiete) sind monatlich im voraus zu zahlen auf das Konto der"
+      move_down LINE_HEIGHT
+      text @texts['gmbh_name'], style: :bold
+      text "Konto Nr. #{@texts['gmbh_bank_account_info_no']}", style: :bold
+      text "#{@texts['gmbh_bank_name']}, BLZ #{@texts['gmbh_bank_account_info_blz']}", style: :bold
+      move_down PARAGRAPH_HEIGHT
+
+      text "4. Reparaturen", style: :bold
+      move_down BELOW_HEADER_HEIGHT
+      text "Die Instandhaltung besorgt die Vermieterin. Die Schönheitsreparaturen (Anstrich usw.) bzw. deren Kosten übernimmt der_die Mieter_in."
+      move_down PARAGRAPH_HEIGHT
+
+      text "5. Umgang mit dem Wohnraum", style: :bold
+      move_down BELOW_HEADER_HEIGHT
+      text contract.room.security_hint
+    end
   end
 
   def footer
     self.line_width = 0.5
-    y_pos = 80
+    y_pos = 90
     stroke_line [0, y_pos], [bounds.width, y_pos]
-    y_pos -= 5
+    y_pos -= 10 
     bounding_box [20, y_pos], width: bounds.width/2.0 do
       text "#{@texts['gmbh_city']}, den ________________________________", size: 10
       move_down 5
@@ -51,8 +102,8 @@ class PdfRentContract < Prawn::Document
     fill_color '777777'
     y_pos -= 5
     bounding_box [20, y_pos], width: bounds.width/3.0 do
-      text @texts['bank_name'], size: 8
-      text @texts['bank_account_info'], size: 8
+      text @texts['gmbh_bank_name'], size: 8
+      text "BLZ #{@texts['gmbh_bank_account_info_blz']} Konto-Nr.: #{@texts['gmbh_bank_account_info_no']}", size: 8
     end
     bounding_box [20 + bounds.width/3.0, y_pos], width: bounds.width/3.0 do
       text "Geschäftsführung", size: 8
@@ -65,7 +116,7 @@ class PdfRentContract < Prawn::Document
   end
 
   def initialize(contracts, view)
-    super(page_size: 'A4', top_margin: 30, left_margin: 55)
+    super(page_size: 'A4', top_margin: 45, left_margin: 55)
     @contracts = contracts
     @view = view
 
@@ -74,12 +125,13 @@ class PdfRentContract < Prawn::Document
 
     font 'Helvetica'
 
-    width = bounds.width + 65
+    @width = bounds.width - 20
 
     @contracts.each_with_index do |contract, index|
       start_new_page unless index == 0
 
       header contract
+      @column_y = cursor
       left_column contract
       right_column contract
       footer
