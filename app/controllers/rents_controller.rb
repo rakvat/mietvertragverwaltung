@@ -8,6 +8,12 @@ class RentsController < ApplicationController
 
   # GET /rents/1
   def show
+    if params.include?(:format) && params[:format] == 'pdf'
+      pdf = PdfRentContract.new([@rent], view_context)
+      send_data pdf.render, filename: "RentContract_#{@rent.start.year}/#{@rent.room.house.first}/#{@rent.room.number}",
+                            type: "application/pdf",
+                            disposition: "inline"
+    end
   end
 
   # GET /rents/new
@@ -55,4 +61,5 @@ class RentsController < ApplicationController
     def rent_params
       params.require(:rent).permit(:start, :basic_rent, :room_id, :tenant_id)
     end
+
 end

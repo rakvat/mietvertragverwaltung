@@ -1,0 +1,11 @@
+gmbh_name: "HausprojektName GmbH"
+gmbh_street_no: "Musterstraße 23"
+gmbh_zipcode: "12345"
+gmbh_city: "Berlin"
+
+bank_name: "GLS-Bank"
+bank_account_info: "BLZ 43060967 Konto-Nr.: 1123596400"
+gmbh_executive_board: "Anna Arthur, Benni Besen"
+gmbh_register_number: "HRB 123456 B"
+gmbh_tax_number: "27/002/12345"
+

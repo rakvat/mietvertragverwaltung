@@ -17,3 +17,6 @@
 
 .ruby-version
 .ruby-gemset
+
+/custom/*.png
+/custom/*.yml
