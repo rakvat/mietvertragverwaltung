@@ -1,0 +1,29 @@
+<h1>Listing needed_assessory_charges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Start</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @needed_assessory_charges.each do |needed_assessory_charge| %>
+      <tr>
+        <td><%= needed_assessory_charge.value %></td>
+        <td><%= needed_assessory_charge.start %></td>
+        <td><%= link_to 'Show', needed_assessory_charge %></td>
+        <td><%= link_to 'Edit', edit_needed_assessory_charge_path(needed_assessory_charge) %></td>
+        <td><%= link_to 'Destroy', needed_assessory_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Needed assessory charge', new_needed_assessory_charge_path %>

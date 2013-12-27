@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227082505) do
+ActiveRecord::Schema.define(version: 20131227083404) do
+
+  create_table "needed_assessory_charges", force: true do |t|
+    t.float    "value"
+    t.date     "start"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "needed_basic_rents", force: true do |t|
+    t.float    "value"
+    t.date     "start"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "needed_heating_charges", force: true do |t|
+    t.float    "value"
+    t.date     "start"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "rooms", force: true do |t|
     t.integer  "number"

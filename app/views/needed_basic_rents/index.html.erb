@@ -1,0 +1,29 @@
+<h1>Listing needed_basic_rents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Start</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @needed_basic_rents.each do |needed_basic_rent| %>
+      <tr>
+        <td><%= needed_basic_rent.value %></td>
+        <td><%= needed_basic_rent.start %></td>
+        <td><%= link_to 'Show', needed_basic_rent %></td>
+        <td><%= link_to 'Edit', edit_needed_basic_rent_path(needed_basic_rent) %></td>
+        <td><%= link_to 'Destroy', needed_basic_rent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Needed basic rent', new_needed_basic_rent_path %>

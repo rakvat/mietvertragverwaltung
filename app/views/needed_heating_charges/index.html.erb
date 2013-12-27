@@ -1,0 +1,29 @@
+<h1>Listing needed_heating_charges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Start</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @needed_heating_charges.each do |needed_heating_charge| %>
+      <tr>
+        <td><%= needed_heating_charge.value %></td>
+        <td><%= needed_heating_charge.start %></td>
+        <td><%= link_to 'Show', needed_heating_charge %></td>
+        <td><%= link_to 'Edit', edit_needed_heating_charge_path(needed_heating_charge) %></td>
+        <td><%= link_to 'Destroy', needed_heating_charge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Needed heating charge', new_needed_heating_charge_path %>

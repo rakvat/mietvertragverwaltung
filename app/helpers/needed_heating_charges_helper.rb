@@ -1,0 +1,2 @@
+module NeededHeatingChargesHelper
+end

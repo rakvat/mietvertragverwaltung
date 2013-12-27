@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @needed_basic_rent.value %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @needed_basic_rent.start %>
+</p>
+
+<%= link_to 'Edit', edit_needed_basic_rent_path(@needed_basic_rent) %> |
+<%= link_to 'Back', needed_basic_rents_path %>

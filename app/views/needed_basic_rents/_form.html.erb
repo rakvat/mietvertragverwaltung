@@ -1,0 +1,25 @@
+<%= form_for(@needed_basic_rent) do |f| %>
+  <% if @needed_basic_rent.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@needed_basic_rent.errors.count, "error") %> prohibited this needed_basic_rent from being saved:</h2>
+
+      <ul>
+      <% @needed_basic_rent.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :value %><br>
+    <%= f.text_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :start %><br>
+    <%= f.date_select :start %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
