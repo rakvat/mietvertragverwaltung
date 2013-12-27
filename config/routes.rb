@@ -1,4 +1,6 @@
 Mietvertragverwaltung::Application.routes.draw do
+  resources :total_square_meters
+
   resources :rents
 
   resources :needed_assessory_charges
@@ -12,4 +14,7 @@ Mietvertragverwaltung::Application.routes.draw do
   resources :tenants
 
   root 'application#index'
+
+  get 'rents_eval', as:'rents_evaluation', to: 'rents#eval'
+  get 'rents_contract/:id', as:'rents_contract', to: 'rents#contract'
 end

@@ -1,0 +1,29 @@
+<h1>Listing total_square_meters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Start</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @total_square_meters.each do |total_square_meter| %>
+      <tr>
+        <td><%= total_square_meter.value %></td>
+        <td><%= total_square_meter.start %></td>
+        <td><%= link_to 'Show', total_square_meter %></td>
+        <td><%= link_to 'Edit', edit_total_square_meter_path(total_square_meter) %></td>
+        <td><%= link_to 'Destroy', total_square_meter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Total square meter', new_total_square_meter_path %>

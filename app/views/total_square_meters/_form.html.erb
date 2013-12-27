@@ -1,0 +1,25 @@
+<%= form_for(@total_square_meter) do |f| %>
+  <% if @total_square_meter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@total_square_meter.errors.count, "error") %> prohibited this total_square_meter from being saved:</h2>
+
+      <ul>
+      <% @total_square_meter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :value %><br>
+    <%= f.number_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :start %><br>
+    <%= f.date_select :start %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

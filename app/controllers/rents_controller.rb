@@ -1,5 +1,5 @@
 class RentsController < ApplicationController
-  before_action :set_rent, only: [:show, :edit, :update, :destroy]
+  before_action :set_rent, only: [:show, :edit, :update, :destroy, :contract]
 
   # GET /rents
   def index
@@ -8,12 +8,34 @@ class RentsController < ApplicationController
 
   # GET /rents/1
   def show
+  end
+
+  # GET /rents_contract/1
+  def contract
+    @rents = Rent.all_current_at(@rent.start)
+    set_calc_data(@rent.start)
+    rent_total_square = @rent.room.square_meters + @common_space/@rents.length
+    @rent.heating_charges = rent_total_square.to_f/@total_square * @needed_heating
+    @rent.assessory_charges = rent_total_square.to_f/@total_square * @needed_assessory
     if params.include?(:format) && params[:format] == 'pdf'
       pdf = PdfRentContract.new([@rent], view_context)
       send_data pdf.render, filename: "RentContract_#{@rent.start.year}/#{@rent.room.house.first}/#{@rent.room.number}",
                             type: "application/pdf",
                             disposition: "inline"
     end
+  end
+
+  # GET /rents_eval
+  def eval
+    date = Date.current
+    if params.include?('eval')
+      year = params['eval']['date(1i)'].to_i
+      month = params['eval']['date(2i)'].to_i
+      day = params['eval']['date(3i)'].to_i
+      date = Date.new(year, month, day)
+    end
+    @rents = Rent.all_current_at(date)
+    set_calc_data(date)
   end
 
   # GET /rents/new
@@ -62,4 +84,12 @@ class RentsController < ApplicationController
       params.require(:rent).permit(:start, :basic_rent, :room_id, :tenant_id)
     end
 
+    def set_calc_data(date)
+      @total_square = TotalSquareMeter.current_at(date)
+      @needed_basic = NeededBasicRent.current_at(date)
+      @needed_heating = NeededHeatingCharge.current_at(date)
+      @needed_assessory = NeededAssessoryCharge.current_at(date)
+      @rented_square = @rents.collect { |r| r.room.square_meters}.inject { |a,b| a+b }
+      @common_space = @total_square - @rented_square
+    end
 end

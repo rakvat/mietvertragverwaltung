@@ -20,5 +20,7 @@
   <%= TenantsHelper::label(@rent.tenant) %>
 </p>
 
+<%= link_to 'PDF Contract', rents_contract_path(@rent.id, :format => :pdf) %> |
 <%= link_to 'Edit', edit_rent_path(@rent) %> |
 <%= link_to 'Back', rents_path %>
+

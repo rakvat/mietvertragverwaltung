@@ -1,4 +1,9 @@
-<h1>Listing rents</h1>
+<h1>Evaluating rents</h1>
+
+<%= form_tag("/rents_eval", :method => "get") do %>
+  <%= date_select :eval, :date %> 
+  <%= submit_tag "ok" %>
+<% end %>
 
 <table>
   <thead>
@@ -27,6 +32,14 @@
     <% end %>
   </tbody>
 </table>
+
+<b>Summe: Nettokalt vermietet: <%= @rents.collect { |r| r.basic_rent }.inject { |a,b| a+b } %> </b>
+<b>Summe: m² vermietet: <%= @rents.collect { |r| r.room.square_meter}.inject { |a,b| a+b } %> </b>
+
+    @total_square = TotalSquareMeter.current_at(date)
+    @needed_basic = NeededBasicRent.current_at(date)
+    @needed_heating = NeededHeatingCharge.current_at(date)
+    @needed_assessory = NeededAssessoryCharge.current_at(date)
 
 <br>
 

@@ -40,21 +40,21 @@ class PdfRentContract < Prawn::Document
 
       text "2. Mietzeit", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text "Das Mietverhältnis ist von unbestimmter Dauer und beginnt mit dem <b>#{contract.start}</b>", inline_format: true
+      text "Das Mietverhältnis ist von unbestimmter Dauer und beginnt mit dem <b>#{contract.start.strftime("%d.%m.%Y")}</b>", inline_format: true
       text "Es kann von beiden Vertragsparteien im Rahmen der gesetzlichen Bestimmungen und Fristen gekündigt werden, falls nichts anderes vereinbart ist."
       move_down PARAGRAPH_HEIGHT
 
       text "3. Miete", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text "Die Nettokaltmiete beträgt monatlich: <b>#{contract.basic_rent} €</b>", inline_format: true
+      text "Die Nettokaltmiete beträgt monatlich: <b>#{contract.basic_rent}€</b>", inline_format: true
       move_down LINE_HEIGHT
       text "Zusätzlich ist eine monatliche Vorauszahlung für Heiz- und Nebenkosten zu entrichten:"
       move_down LINE_HEIGHT
-      text "Heizung/Warmwasser: #{contract.heating_charges} €"
-      text "Sonstige Nebenkosten: #{contract.assessory_charges} €"
-      text "Summe Nebenkosten: <b>#{contract.sum_assessory_charges} €</b>", inline_format: true
+      text "Heizung/Warmwasser: #{contract.heating_charges}€"
+      text "Sonstige Nebenkosten: #{contract.assessory_charges}€"
+      text "Summe Nebenkosten: <b>#{contract.sum_assessory_charges}€</b>", inline_format: true
       move_down LINE_HEIGHT
-      text "Gesamtmiete: #{contract.sum_rent} €", style: :bold
+      text "Gesamtmiete: #{contract.sum_rent}€", style: :bold
     end
   end
 
