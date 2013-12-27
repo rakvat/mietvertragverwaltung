@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  house: MyString
+  floor_short: MyString
+  features: MyString
+  square_meters: 1
+  security_hint: MyText
+  location: MyString
+
+two:
+  id: 1
+  house: MyString
+  floor_short: MyString
+  features: MyString
+  square_meters: 1
+  security_hint: MyText
+  location: MyString
