@@ -27,15 +27,15 @@ class RentsController < ApplicationController
 
   # GET /rents_eval
   def eval
-    date = Date.current
+    @date = Date.current
     if params.include?('eval')
       year = params['eval']['date(1i)'].to_i
       month = params['eval']['date(2i)'].to_i
       day = params['eval']['date(3i)'].to_i
-      date = Date.new(year, month, day)
+      @date = Date.new(year, month, day)
     end
-    @rents = Rent.all_current_at(date)
-    set_calc_data(date)
+    @rents = Rent.all_current_at(@date)
+    set_calc_data(@date)
   end
 
   # GET /rents/new

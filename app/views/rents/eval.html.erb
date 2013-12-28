@@ -5,7 +5,7 @@
   <%= submit_tag "ok" %>
 <% end %>
 
-<br/>
+<h2>Current date: <%= @date %></h2>
 <b>Summe: Nettokalt vermietet: <%= @rents.collect { |r| r.basic_rent }.inject { |a,b| a+b } %> </b>
 <br/>
 <b>Benötigte Nettokaltmiete: <%= @needed_basic %> </b>

@@ -8,9 +8,12 @@ class Rent < ActiveRecord::Base
     current_contracts = []
     rooms = Room.all
     rooms.each do |room|
-      rents = room.rents.order('start')
+      rents = room.rents.order('start').reverse
       rents.each do |rent|
-        current_contracts << rent if date >= rent.start
+        if date >= rent.start
+          current_contracts << rent 
+          break
+        end
       end
     end
     current_contracts
