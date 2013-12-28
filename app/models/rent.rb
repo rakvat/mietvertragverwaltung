@@ -1,5 +1,6 @@
 class Rent < ActiveRecord::Base
-  belongs_to :room
+  has_many :rented_rooms
+  has_many :rooms, through: :rented_rooms
   belongs_to :tenant
 
   attr_accessor :heating_charges, :assessory_charges
@@ -22,11 +23,15 @@ class Rent < ActiveRecord::Base
   end
 
   def sum_assessory_charges
-    self.heating_charges + self.assessory_charges
+    self.heating_charges.round(2) + self.assessory_charges.round(2)
   end
 
 
   def sum_rent
-    self.basic_rent + sum_assessory_charges
+    self.basic_rent.round(2) + sum_assessory_charges.round(2)
+  end
+
+  def square_meters
+    rooms.inject(0) { |a,b| a + b.square_meters }
   end
 end

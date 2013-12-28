@@ -1,3 +1,4 @@
 class Room < ActiveRecord::Base
-  has_many :rents
+  has_many :rented_rooms
+  has_many :rents, through: :rented_rooms
 end

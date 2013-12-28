@@ -11,8 +11,8 @@
 </p>
 
 <p>
-  <strong>Room:</strong>
-  <%= RoomsHelper::label(@rent.room) %>
+  <strong>Rooms:</strong>
+  <%= @rent.rooms.map { |r| RoomsHelper::label(r) }.join(', ') %>
 </p>
 
 <p>

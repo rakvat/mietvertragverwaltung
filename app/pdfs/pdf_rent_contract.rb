@@ -14,7 +14,7 @@ class PdfRentContract < Prawn::Document
                                            width: IMAGE_WITH
     text "M   I   E   T   V   E   R   T   R   A   G", size: 14, style: :bold
     move_down LINE_HEIGHT
-    text "Mietvertragnummer: #{contract.start.year}-#{contract.start.month}/#{contract.room.house.first}/#{contract.room.number}", size: 8
+    text "Mietvertragnummer: #{contract.start.year}-#{contract.start.month}/#{contract.rooms.first.house.first}/#{contract.rooms.first.number}", size: 8
     move_down 15
     text "Zwischen"
     move_down LINE_HEIGHT
@@ -32,8 +32,8 @@ class PdfRentContract < Prawn::Document
       move_down BELOW_HEADER_HEIGHT
       text @texts['rooms_location']
       move_down LINE_HEIGHT
-      text RoomsHelper::label(contract.room), style: :bold
-      text "Größe: #{contract.room.square_meters} m²", style: :bold
+      text contract.rooms.map { |r| RoomsHelper::label(r) }.join(', '), style: :bold
+      text "Größe: #{contract.square_meters} m²", style: :bold
       move_down LINE_HEIGHT
       text @texts['rooms_rent_type']
       move_down PARAGRAPH_HEIGHT
@@ -46,7 +46,7 @@ class PdfRentContract < Prawn::Document
 
       text "3. Miete", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text "Die Nettokaltmiete beträgt monatlich: <b>#{contract.basic_rent}€</b>", inline_format: true
+      text "Die Nettokaltmiete beträgt monatlich: <b>#{contract.basic_rent.round(2)}€</b>", inline_format: true
       move_down LINE_HEIGHT
       text "Zusätzlich ist eine monatliche Vorauszahlung für Heiz- und Nebenkosten zu entrichten:"
       move_down LINE_HEIGHT
@@ -75,7 +75,7 @@ class PdfRentContract < Prawn::Document
 
       text "5. Umgang mit dem Wohnraum", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text contract.room.security_hint
+      text contract.rooms.first.security_hint
     end
   end
 

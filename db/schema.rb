@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227210543) do
+ActiveRecord::Schema.define(version: 20131228100628) do
 
   create_table "needed_assessory_charges", force: true do |t|
     t.float    "value"
@@ -34,16 +34,24 @@ ActiveRecord::Schema.define(version: 20131227210543) do
     t.datetime "updated_at"
   end
 
+  create_table "rented_rooms", force: true do |t|
+    t.integer  "room_id"
+    t.integer  "rent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rented_rooms", ["rent_id"], name: "index_rented_rooms_on_rent_id"
+  add_index "rented_rooms", ["room_id"], name: "index_rented_rooms_on_room_id"
+
   create_table "rents", force: true do |t|
     t.date     "start"
     t.float    "basic_rent"
-    t.integer  "room_id"
     t.integer  "tenant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rents", ["room_id"], name: "index_rents_on_room_id"
   add_index "rents", ["tenant_id"], name: "index_rents_on_tenant_id"
 
   create_table "rooms", force: true do |t|
