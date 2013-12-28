@@ -19,7 +19,7 @@ class RentsController < ApplicationController
     @rent.assessory_charges = (rent_total_square.to_f/@total_square * @needed_assessory).round(2)
     if params.include?(:format) && params[:format] == 'pdf'
       pdf = PdfRentContract.new([@rent], view_context)
-      send_data pdf.render, filename: "RentContract_#{@rent.start.year}/#{@rent.rooms.first.house.first}/#{@rent.rooms.first.number}",
+      send_data pdf.render, filename: "RentContract_#{@rent.start.year}_#{@rent.rooms.first.house.first}_#{@rent.rooms.first.number}",
                             type: "application/pdf",
                             disposition: "inline"
     end
@@ -49,7 +49,7 @@ class RentsController < ApplicationController
 
   # POST /rents
   def create
-    @rent = Rent.new(rent_params)
+    @rent = Rent::create_nested(params['rent'].to_hash)
 
     if @rent.save
       redirect_to @rent, notice: 'Rent was successfully created.'
@@ -60,7 +60,7 @@ class RentsController < ApplicationController
 
   # PATCH/PUT /rents/1
   def update
-    if @rent.update(rent_params)
+    if @rent.nested_update(params['rent'].to_hash)
       redirect_to @rent, notice: 'Rent was successfully updated.'
     else
       render action: 'edit'
@@ -81,7 +81,7 @@ class RentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def rent_params
-      params.require(:rent).permit(:start, :basic_rent, :room_id, :tenant_id)
+      params.require(:rent).permit(:start, :basic_rent, :room_ids, :tenant_id)
     end
 
     def set_calc_data(date)

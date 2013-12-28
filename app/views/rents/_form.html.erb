@@ -20,8 +20,8 @@
     <%= f.text_field :basic_rent %>
   </div>
   <div class="field">
-    <%= f.label :room_id %><br>
-    <%= f.select("room_id", Room.all.collect {|r| [ RoomsHelper::label(r), r.id ] }, { include_blank: true }) %>
+    <%= f.label :room_ids %><br>
+    <%= f.select("room_ids", Room.all.collect {|r| [ RoomsHelper::label(r), r.id ] }, {include_blank: true }, {multiple: true, size:15} ) %>
   </div>
   <div class="field">
     <%= f.label :tenant_id %><br>

@@ -32,7 +32,7 @@ class PdfRentContract < Prawn::Document
       move_down BELOW_HEADER_HEIGHT
       text @texts['rooms_location']
       move_down LINE_HEIGHT
-      text contract.rooms.map { |r| RoomsHelper::label(r) }.join(', '), style: :bold
+      text contract.rooms.map { |r| RoomsHelper::label(r) }.join('; '), style: :bold
       text "Größe: #{contract.square_meters} m²", style: :bold
       move_down LINE_HEIGHT
       text @texts['rooms_rent_type']

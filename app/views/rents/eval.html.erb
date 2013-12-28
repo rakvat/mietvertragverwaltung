@@ -48,7 +48,7 @@
       <tr>
         <td><%= rent.start %></td>
         <td><%= rent.basic_rent %></td>
-        <td><%= rent.rooms.map { |r| RoomsHelper::label(r) }.join(', ') %></td>
+        <td><%= rent.rooms.map { |r| RoomsHelper::label(r) }.join('; ') %></td>
         <td><%= TenantsHelper::label(rent.tenant) %></td>
         <td><%= rent.square_meters %></td>
         <% rent_total_square = rent.square_meters + @common_space/@rents.length %>
