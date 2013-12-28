@@ -11,7 +11,9 @@ class Rent < ActiveRecord::Base
       rents = room.rents.order('start').reverse
       rents.each do |rent|
         if date >= rent.start
-          current_contracts << rent 
+          unless rent.tenant.nil? # wenn nicht Leerstand
+            current_contracts << rent 
+          end
           break
         end
       end

@@ -17,7 +17,7 @@
 
 <p>
   <strong>Tenant:</strong>
-  <%= TenantsHelper::label(@rent.tenant) %>
+  <%= TenantsHelper::label(@rent.tenant) unless @rent.tenant.nil? %>
 </p>
 
 <%= link_to 'PDF Contract', rents_contract_path(@rent.id, :format => :pdf) %> |
