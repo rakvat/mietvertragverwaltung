@@ -19,7 +19,7 @@ class RentsController < ApplicationController
     @rent.assessory_charges = (rent_total_square.to_f/@total_square * @needed_assessory).round(2)
     if params.include?(:format) && params[:format] == 'pdf'
       pdf = PdfRentContract.new([@rent], view_context)
-      send_data pdf.render, filename: "RentContract_#{@rent.start.year}_#{@rent.rooms.first.house.first}_#{@rent.rooms.first.number}",
+      send_data pdf.render, filename: "RentalContract_#{@rent.start.year}_#{@rent.rooms.first.house.first}_#{@rent.rooms.first.number}",
                             type: "application/pdf",
                             disposition: "inline"
     end
