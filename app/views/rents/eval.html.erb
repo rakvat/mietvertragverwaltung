@@ -24,21 +24,18 @@
         <td><%= TenantsHelper::label(contract.tenant) %></td>
         <td><%= contract.rooms.map { |r| RoomsHelper::label(r) }.join('; ') %></td>
         <td><%= deci(contract.square_meters) %></td>
-        <% rent_total_square = contract.square_meters + (@common_space * contract.rooms.length/@number_rooms.to_f) %>
-        <td><%= deci(rent_total_square) %></td>
+        <td><%= deci(contract.total_square) %></td>
         <td><%= price(contract.basic_rent) %></td>
-        <% heating = (rent_total_square.to_f/@total_square * @needed_heating).round(2) %>
-        <td><%= price(heating) %></td>
-        <% assessory = (rent_total_square.to_f/@total_square * @needed_assessory).round(2) %>
-        <td><%= price(assessory) %></td>
-        <td><%= price(contract.basic_rent.round(2) + heating.round(2) + assessory.round(2)) %></td>
+        <td><%= price(contract.heating_charges) %></td>
+        <td><%= price(contract.assessory_charges) %></td>
+        <td><%= price(contract.sum_rent) %></td>
         <td><%= contract.start %></td>
         <td><%= link_to 'Show ', contract %> | 
           <%= link_to 'PDF', rents_contract_path(contract.id, :format => :pdf) %> |
           <%= link_to 'Edit', edit_rent_path(contract) %> | 
           <%= link_to 'Destroy', contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% sum_heating += heating %>
-        <% sum_assessory += assessory %>
+        <% sum_heating += contract.heating_charges %>
+        <% sum_assessory += contract.assessory_charges %>
       </tr>
     <% end %>
   </tbody>
@@ -49,26 +46,26 @@
 <% sum_bacic_rent = @rents.collect { |r| r.basic_rent }.inject { |a,b| a+b } %>
 <b>Summe Nettokalt vermietet: <%= price(sum_bacic_rent) %> </b> <br/>
 <b>Benötigte Nettokaltmiete: <%= price(@needed_basic) %> </b> <br/>
-<i>(diff: <%= price(@needed_basic-sum_bacic_rent) %>)</i><br/>
+<i>(diff: <%= price(sum_bacic_rent - @needed_basic) %>)</i><br/>
 <br/>
 
 <b>Anzahl vermieteter Räume: <%= rented_rooms = @rents.collect { |r| r.rooms.length }.inject { |a,b| a+b } %></b><br/>
 <b>Anzahl vermietbarer Räume: <%= @number_rooms %></b></br>
-<i>(diff: <%= @number_rooms - rented_rooms %>) </i></br>
+<i>(diff: <%= rented_rooms - @number_rooms %>) </i></br>
 <br/>
 
 <b>Summe: m² vermietet: <%= deci(@rented_square) %> </b> <br/>
 <b>Gemeinschaftsfläche: <%= deci(@common_space) %> </b><br/>
 <b>Gesamtfläche: <%= deci(@total_square) %> </b> <br/>
-<i>(diff: <%= deci(@total_square - @rented_square - @common_space) %>)</i><br/>
+<i>(diff: <%= deci(@rented_square + @common_space - @total_square) %>)</i><br/>
 <br/>
 
 <b>Summe Heizkosten: <%= price(sum_heating) %> </b><br/>
 <b>Benötigte Heiznebenkosten: <%= price(@needed_heating) %> </b> <br/>
-<i>(diff: <%= price(@needed_heating - sum_heating) %>)</i><br/>
+<i>(diff: <%= price(sum_heating - @needed_heating) %>)</i><br/>
 <br/>
 <b>Summe Sonstige Nebenkosten: <%= price(sum_assessory) %> </b><br/>
 <b>Benötigte Sonstige Nebenkosten: <%= price(@needed_assessory) %> </b> <br/>
-<i>(diff: <%= price(@needed_assessory - sum_assessory) %>)</i><br/>
+<i>(diff: <%= price(sum_assessory - @needed_assessory) %>)</i><br/>
 <br/>
 

@@ -3,7 +3,7 @@ class Rent < ActiveRecord::Base
   has_many :rooms, through: :rented_rooms
   belongs_to :tenant
 
-  attr_accessor :heating_charges, :assessory_charges
+  attr_accessor :total_square, :heating_charges, :assessory_charges
 
   def self.create_nested(params)
     room_ids = params.delete('room_ids')
