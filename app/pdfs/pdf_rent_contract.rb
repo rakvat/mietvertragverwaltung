@@ -1,4 +1,5 @@
 class PdfRentContract < Prawn::Document
+  include RentsHelper
 
   IMAGE_WITH = 180
   IMAGE_HEIGHT = 52
@@ -40,20 +41,20 @@ class PdfRentContract < Prawn::Document
 
       text "2. Mietzeit", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text "Das Mietverhältnis ist von unbestimmter Dauer und beginnt mit dem <b>#{contract.start.strftime("%d.%m.%Y")}</b>", inline_format: true
+      text "Das Mietverhältnis ist von unbestimmter Dauer und beginnt mit dem <b>#{date(contract.start)}</b>", inline_format: true
       text "Es kann von beiden Vertragsparteien im Rahmen der gesetzlichen Bestimmungen und Fristen gekündigt werden, falls nichts anderes vereinbart ist."
       move_down PARAGRAPH_HEIGHT
 
       text "3. Miete", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text "Die Nettokaltmiete beträgt monatlich <b>#{sprintf("%.2f",contract.basic_rent.round(2))}€</b>", inline_format: true
+      text "Die Nettokaltmiete beträgt monatlich <b>#{price(contract.basic_rent)}</b>", inline_format: true
       move_down LINE_HEIGHT
       text "Zusätzlich ist eine monatliche Vorauszahlung für Heiz- und Nebenkosten zu entrichten:"
-      text "Heizung/Warmwasser: #{sprintf("%.2f",contract.heating_charges)}€"
-      text "Sonstige Nebenkosten: #{sprintf("%.2f",contract.assessory_charges)}€"
-      text "Summe Nebenkosten: <b>#{sprintf("%.2f",contract.sum_assessory_charges)}€</b>", inline_format: true
+      text "Heizung/Warmwasser: #{price(contract.heating_charges)}"
+      text "Sonstige Nebenkosten: #{price(contract.assessory_charges)}"
+      text "Summe Nebenkosten: <b>#{price(contract.sum_assessory_charges)}</b>", inline_format: true
       move_down 5
-      text "Gesamtmiete: #{sprintf("%.2f",contract.sum_rent)}€", style: :bold
+      text "Gesamtmiete: #{price(contract.sum_rent)}", style: :bold
     end
   end
 
