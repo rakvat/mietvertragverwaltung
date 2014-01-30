@@ -1,14 +1,19 @@
 <h3> Mietvertragverwaltung </h3>
 
-<ul>
-  <li> <%= link_to "Aktualisiere die Liste der Räume", rooms_path %> </li>
-  <li> <%= link_to "Aktualisiere die Liste der Mieter_innen", tenants_path %> </li>
-  <li> <%= link_to "Benötigte Nettokaltmiete", needed_basic_rents_path %> </li>
-  <li> <%= link_to "Benötigte Heizkosten", needed_heating_charges_path %> </li>
-  <li> <%= link_to "Benötigte Sonstige Nebenkosten", needed_assessory_charges_path %> </li>
-  <li> <%= link_to "Gesamtfläche", total_square_meters_path %> </li>
-</ul>
+<b>Übersicht Räume und Mieter_innen</b><br/>
+<%= link_to "Aktualisiere die Liste der Räume", rooms_path %><br/>
+<%= link_to "Aktualisiere die Liste der Mieter_innen", tenants_path %><br/>
+<br/><br/>
 
+<b>Parameter zur Berechnung</b><br/>
+<%= link_to "Anzahl der vermietbaren Räume", rentable_rooms_path %> <br/>
+<%= link_to "Gesamtfläche", total_square_meters_path %> <br/>
+<%= link_to "Gemeinschaftsfläche", common_spaces_path %> <br/>
+<%= link_to "Benötigte Nettokaltmiete", needed_basic_rents_path %> <br/>
+<%= link_to "Benötigte Heizkosten", needed_heating_charges_path %> <br/>
+<%= link_to "Benötigte Sonstige Nebenkosten", needed_assessory_charges_path %> <br/>
+<br/><br/>
+
+<b>Mietverträge</b><br/>
 <%= link_to "Mietverträge", rents_path %><br/>
-<br/>
 <%= link_to "Mietverträge Auswertung für bestimmten Zeitpunkt", rents_evaluation_path %>

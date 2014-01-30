@@ -1,0 +1,2 @@
+module CommonSpacesHelper
+end

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @rentable_room.value %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @rentable_room.start %>
+</p>
+
+<%= link_to 'Edit', edit_rentable_room_path(@rentable_room) %> |
+<%= link_to 'Back', rentable_rooms_path %>

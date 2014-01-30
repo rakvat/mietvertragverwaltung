@@ -1,4 +1,8 @@
 Mietvertragverwaltung::Application.routes.draw do
+  resources :rentable_rooms
+
+  resources :common_spaces
+
   resources :total_square_meters
 
   resources :rents

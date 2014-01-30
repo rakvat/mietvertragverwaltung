@@ -1,0 +1,29 @@
+<h1>Listing common_spaces</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Start</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @common_spaces.each do |common_space| %>
+      <tr>
+        <td><%= common_space.value %></td>
+        <td><%= common_space.start %></td>
+        <td><%= link_to 'Show', common_space %></td>
+        <td><%= link_to 'Edit', edit_common_space_path(common_space) %></td>
+        <td><%= link_to 'Destroy', common_space, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Common space', new_common_space_path %>

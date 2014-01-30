@@ -14,9 +14,15 @@ class RentsController < ApplicationController
   def contract
     @rents = Rent.all_current_at(@rent.start)
     set_calc_data(@rent.start)
-    rent_total_square = @rent.square_meters + @common_space/@rents.length
+    puts "common space: #{@common_space}"
+    puts "num contracts: #{@rents.length}"
+    #rent_total_square = @rent.square_meters + @common_space/@rents.length
+    rent_total_square = @rent.square_meters + @common_space/11.0
+    puts "sq #{@rent.square_meters} total #{rent_total_square}"
     @rent.heating_charges = (rent_total_square.to_f/@total_square * @needed_heating).round(2)
+    puts "heating #{@rent.heating_charges}"
     @rent.assessory_charges = (rent_total_square.to_f/@total_square * @needed_assessory).round(2)
+    puts "assessory #{@rent.assessory_charges}"
     if params.include?(:format) && params[:format] == 'pdf'
       pdf = PdfRentContract.new([@rent], view_context)
       send_data pdf.render, filename: "RentalContract_#{@rent.start.year}_#{@rent.rooms.first.house.first}_#{@rent.rooms.first.number}",
@@ -35,6 +41,7 @@ class RentsController < ApplicationController
       @date = Date.new(year, month, day)
     end
     @rents = Rent.all_current_at(@date)
+    puts "#num rents #{@rents.length}"
     set_calc_data(@date)
   end
 
@@ -90,6 +97,7 @@ class RentsController < ApplicationController
       @needed_heating = NeededHeatingCharge.current_at(date)
       @needed_assessory = NeededAssessoryCharge.current_at(date)
       @rented_square = @rents.collect { |r| r.square_meters }.inject { |a,b| a+b }
-      @common_space = @total_square - @rented_square
+      @common_space = CommonSpace.current_at(date) 
+      @number_rooms = RentableRoom.current_at(date)
     end
 end

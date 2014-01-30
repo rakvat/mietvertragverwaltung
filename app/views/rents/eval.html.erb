@@ -6,60 +6,69 @@
 <% end %>
 
 <h2>Current date: <%= @date %></h2>
-<b>Summe: Nettokalt vermietet: <%= @rents.collect { |r| r.basic_rent }.inject { |a,b| a+b } %> </b>
-<br/>
-<b>Benötigte Nettokaltmiete: <%= @needed_basic %> </b>
-<br/>
-<br/>
 
-<b>Summe: m² vermietet: <%= @rented_square %> </b>
-<br/>
-<b>Gesamtfläche: <%= @total_square %> </b>
-<br/>
-<b>Gemeinschaftsfläche: <%= @common_space %> </b>
-<br/>
-<br/>
-
-<b>Benötigte Heiznebenkosten: <%= @needed_heating %> </b>
-<br/>
-<b>Benötigte Sonstige Nebenkosten: <%= @needed_assessory %> </b>
-<br/>
-<br/>
+<h2>Overview</h2>
+<% sum_heating = 0 %>
+<% sum_assessory = 0 %>
 
 <table>
   <thead>
     <tr>
-      <th>Start</th>
-      <th>Basic rent</th>
-      <th>Rooms</th>
-      <th>Tenant</th>
-      <th>m²</th>
-      <th>m² + Gemeinschaftsanteil</th>
-      <th>heating charge</th>
-      <th>assessory charge</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Tenant</th> <th>Rooms</th> <th>m²</th> <th>m²+Gem.</th><th>Basic rent</th><th>heating</th> <th>assessory</th> <th>total</th><th>Start</th><th></th> 
     </tr>
   </thead>
 
   <tbody>
-    <% @rents.each do |rent| %>
+    <% @rents.each do |contract| %>
       <tr>
-        <td><%= rent.start %></td>
-        <td><%= rent.basic_rent %></td>
-        <td><%= rent.rooms.map { |r| RoomsHelper::label(r) }.join('; ') %></td>
-        <td><%= TenantsHelper::label(rent.tenant) %></td>
-        <td><%= rent.square_meters %></td>
-        <% rent_total_square = rent.square_meters + @common_space/@rents.length %>
-        <td><%= rent_total_square %></td>
-        <td><%= (rent_total_square.to_f/@total_square * @needed_heating).round(2) %></td>
-        <td><%= (rent_total_square.to_f/@total_square * @needed_assessory).round(2) %></td>
-        <td><%= link_to 'Show Details/Contract', rent %></td>
-        <td><%= link_to 'Edit', edit_rent_path(rent) %></td>
-        <td><%= link_to 'Destroy', rent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= TenantsHelper::label(contract.tenant) %></td>
+        <td><%= contract.rooms.map { |r| RoomsHelper::label(r) }.join('; ') %></td>
+        <td><%= deci(contract.square_meters) %></td>
+        <% rent_total_square = contract.square_meters + (@common_space * contract.rooms.length/@number_rooms.to_f) %>
+        <td><%= deci(rent_total_square) %></td>
+        <td><%= price(contract.basic_rent) %></td>
+        <% heating = (rent_total_square.to_f/@total_square * @needed_heating).round(2) %>
+        <td><%= price(heating) %></td>
+        <% assessory = (rent_total_square.to_f/@total_square * @needed_assessory).round(2) %>
+        <td><%= price(assessory) %></td>
+        <td><%= price(contract.basic_rent.round(2) + heating.round(2) + assessory.round(2)) %></td>
+        <td><%= contract.start %></td>
+        <td><%= link_to 'Show ', contract %> | 
+          <%= link_to 'PDF', rents_contract_path(contract.id, :format => :pdf) %> |
+          <%= link_to 'Edit', edit_rent_path(contract) %> | 
+          <%= link_to 'Destroy', contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% sum_heating += heating %>
+        <% sum_assessory += assessory %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<h2>Evaluation</h2>
+
+<% sum_bacic_rent = @rents.collect { |r| r.basic_rent }.inject { |a,b| a+b } %>
+<b>Summe Nettokalt vermietet: <%= price(sum_bacic_rent) %> </b> <br/>
+<b>Benötigte Nettokaltmiete: <%= price(@needed_basic) %> </b> <br/>
+<i>(diff: <%= price(@needed_basic-sum_bacic_rent) %>)</i><br/>
+<br/>
+
+<b>Anzahl vermieteter Räume: <%= rented_rooms = @rents.collect { |r| r.rooms.length }.inject { |a,b| a+b } %></b><br/>
+<b>Anzahl vermietbarer Räume: <%= @number_rooms %></b></br>
+<i>(diff: <%= @number_rooms - rented_rooms %>) </i></br>
+<br/>
+
+<b>Summe: m² vermietet: <%= deci(@rented_square) %> </b> <br/>
+<b>Gemeinschaftsfläche: <%= deci(@common_space) %> </b><br/>
+<b>Gesamtfläche: <%= deci(@total_square) %> </b> <br/>
+<i>(diff: <%= deci(@total_square - @rented_square - @common_space) %>)</i><br/>
+<br/>
+
+<b>Summe Heizkosten: <%= price(sum_heating) %> </b><br/>
+<b>Benötigte Heiznebenkosten: <%= price(@needed_heating) %> </b> <br/>
+<i>(diff: <%= price(@needed_heating - sum_heating) %>)</i><br/>
+<br/>
+<b>Summe Sonstige Nebenkosten: <%= price(sum_assessory) %> </b><br/>
+<b>Benötigte Sonstige Nebenkosten: <%= price(@needed_assessory) %> </b> <br/>
+<i>(diff: <%= price(@needed_assessory - sum_assessory) %>)</i><br/>
+<br/>
 

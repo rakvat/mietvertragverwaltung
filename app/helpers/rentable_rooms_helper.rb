@@ -1,0 +1,2 @@
+module RentableRoomsHelper
+end
