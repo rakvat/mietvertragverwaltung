@@ -27,6 +27,18 @@
     <%= f.label :tenant_id %><br>
     <%= f.select("tenant_id", Tenant.all.collect {|t| [ TenantsHelper::label(t), t.id ] }, { include_blank: true }) %>
   </div>
+  <div class="field">
+    <%= f.label :custom_heating %><br>
+    <%= f.text_field :custom_heating %>
+  </div>
+  <div class="field">
+    <%= f.label :custom_assessory %><br>
+    <%= f.text_field :custom_assessory %>
+  </div>
+  <div class="field">
+    <%= f.label :comment %><br>
+    <%= f.text_field :comment %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

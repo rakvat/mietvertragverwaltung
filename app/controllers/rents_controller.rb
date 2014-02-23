@@ -80,7 +80,7 @@ class RentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def rent_params
-      params.require(:rent).permit(:start, :basic_rent, :room_ids, :tenant_id)
+      params.require(:rent).permit(:start, :basic_rent, :room_ids, :tenant_id, :custom_heating, :custom_assessory, :comment)
     end
 
     def set_calc_data(date)

@@ -44,9 +44,16 @@ class Rent < ActiveRecord::Base
   end
 
   def sum_assessory_charges
-    (self.heating_charges.round(2) + self.assessory_charges.round(2)).round(2)
+    heating = self.heating_charges
+    assessory = self.assessory_charges
+    unless self.custom_heating.nil?
+      heating = self.custom_heating
+    end
+    unless self.custom_assessory.nil?
+      assessory = self.custom_assessory
+    end
+    (heating.round(2) + assessory.round(2)).round(2)
   end
-
 
   def sum_rent
     (self.basic_rent.round(2) + sum_assessory_charges.round(2)).round(2)

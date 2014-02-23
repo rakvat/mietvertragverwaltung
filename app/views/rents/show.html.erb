@@ -20,6 +20,21 @@
   <%= TenantsHelper::label(@rent.tenant) unless @rent.tenant.nil? %>
 </p>
 
+<p>
+  <strong>Custom heating:</strong>
+  <%= @rent.custom_heating %>
+</p>
+
+<p>
+  <strong>Custom assessory:</strong>
+  <%= @rent.custom_assessory %>
+</p>
+
+<p>
+  <strong>Comment</strong>
+  <%= @rent.comment %>
+</p>
+
 <%= link_to 'PDF Contract', rents_contract_path(@rent.id, :format => :pdf) %> |
 <%= link_to 'Edit', edit_rent_path(@rent) %> |
 <%= link_to 'Back', rents_path %>

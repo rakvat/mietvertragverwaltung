@@ -50,8 +50,8 @@ class PdfRentContract < Prawn::Document
       text "Die Nettokaltmiete beträgt monatlich <b>#{price(contract.basic_rent)}</b>", inline_format: true
       move_down LINE_HEIGHT
       text "Zusätzlich ist eine monatliche Vorauszahlung für Heiz- und Nebenkosten zu entrichten:"
-      text "Heizung/Warmwasser: #{price(contract.heating_charges)}"
-      text "Sonstige Nebenkosten: #{price(contract.assessory_charges)}"
+      text "Heizung/Warmwasser: #{price(contract.custom_heating.nil? ? contract.heating_charges : contract.custom_heating)}"
+      text "Sonstige Nebenkosten: #{price(contract.custom_assessory.nil? ? contract.assessory_charges : contract.custom_assessory)}"
       text "Summe Nebenkosten: <b>#{price(contract.sum_assessory_charges)}</b>", inline_format: true
       move_down 5
       text "Gesamtmiete: #{price(contract.sum_rent)}", style: :bold

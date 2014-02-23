@@ -7,6 +7,9 @@
       <th>Basic rent</th>
       <th>Rooms</th>
       <th>Tenant</th>
+      <th>Custom Heating</th>
+      <th>Custom Assessory</th>
+      <th>Comment</th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,6 +23,9 @@
         <td><%= rent.basic_rent %></td>
         <td><%= rent.rooms.map { |r| RoomsHelper::label(r) }.join('; ') %></td>
         <td><%= TenantsHelper::label(rent.tenant) unless rent.tenant.nil?%></td>
+        <td><%= rent.custom_heating %></td>
+        <td><%= rent.custom_assessory %></td>
+        <td><%= rent.comment %></td>
         <td><%= link_to 'Show Details/Contract', rent %></td>
         <td><%= link_to 'Edit', edit_rent_path(rent) %></td>
         <td><%= link_to 'Destroy', rent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
