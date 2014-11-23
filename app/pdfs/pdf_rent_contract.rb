@@ -64,8 +64,8 @@ class PdfRentContract < Prawn::Document
       text "Nettokaltmiete und Nebenkosten (Gesamtmiete) sind monatlich im voraus zu zahlen auf das Konto der"
       move_down LINE_HEIGHT
       text @texts['gmbh_name'], style: :bold
-      text "Konto Nr. #{@texts['gmbh_bank_account_info_no']}", style: :bold
-      text "#{@texts['gmbh_bank_name']}, BLZ #{@texts['gmbh_bank_account_info_blz']}", style: :bold
+      text "#{@texts['gmbh_bank_name']}, BIC: #{@texts['gmbh_bank_bic']}", style: :bold
+      text "IBAN: #{@texts['gmbh_bank_iban']}", style: :bold
       move_down PARAGRAPH_HEIGHT
 
       text "4. Reparaturen", style: :bold
@@ -102,8 +102,8 @@ class PdfRentContract < Prawn::Document
     fill_color '777777'
     y_pos -= 5
     bounding_box [20, y_pos], width: bounds.width/3.0 do
-      text @texts['gmbh_bank_name'], size: 8
-      text "BLZ #{@texts['gmbh_bank_account_info_blz']} Konto-Nr.: #{@texts['gmbh_bank_account_info_no']}", size: 8
+      text "#{@texts['gmbh_bank_name']}, BIC: #{@texts['gmbh_bank_bic']}", size: 8
+      text "IBAN: #{@texts['gmbh_bank_iban']}", size: 8
     end
     bounding_box [20 + bounds.width/3.0, y_pos], width: bounds.width/3.0 do
       text "Geschäftsführung", size: 8
