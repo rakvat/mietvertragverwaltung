@@ -14,7 +14,7 @@
 <table>
   <thead>
     <tr>
-      <th>Tenant</th> <th>Rooms</th> <th>m²</th> <th>m²+Gem.</th><th>Basic rent</th><th>heating</th><th>custom heating</th><th>assessory</th><th>custom assessory</th><th>total</th><th>Start</th><td>Comment</td><th></th> 
+      <th>Tenant</th> <th>Rooms</th> <th>m²</th> <th>m²+Gem.</th><td>€/m²</th><th>Basic rent</th><th>heating</th><th>custom heating</th><th>assessory</th><th>custom assessory</th><th>total</th><th>Start</th><td>Comment</td><th></th> 
     </tr>
   </thead>
 
@@ -25,6 +25,7 @@
         <td><%= contract.rooms.map { |r| RoomsHelper::label(r) }.join('; ') %></td>
         <td><%= deci(contract.square_meters) %></td>
         <td><%= deci(contract.total_square) %></td>
+        <td><%= deci(contract.basic_rent/contract.total_square) %></td>
         <td><%= price(contract.basic_rent) %></td>
         <td><%= price(contract.heating_charges) %></td>
         <td><%= price(contract.custom_heating) %></td>

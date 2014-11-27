@@ -94,7 +94,7 @@ class RentsController < ApplicationController
     end
 
     def set_calc_contract_data(contract)
-      contract.total_square = contract.square_meters + @common_space/@number_rooms.to_f
+      contract.total_square = contract.square_meters + @common_space/@rents.length.to_f
       contract.heating_charges = (contract.total_square.to_f/@total_square * @needed_heating).round(2)
       contract.assessory_charges = (contract.total_square.to_f/@total_square * @needed_assessory).round(2)
     end
