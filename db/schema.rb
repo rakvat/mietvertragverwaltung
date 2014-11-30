@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140223072530) do
+ActiveRecord::Schema.define(version: 20141127212026) do
 
   create_table "common_spaces", force: true do |t|
     t.float    "value"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140223072530) do
     t.float    "custom_heating"
     t.float    "custom_assessory"
     t.string   "comment"
+    t.integer  "commons_share",    default: 1
   end
 
   add_index "rents", ["tenant_id"], name: "index_rents_on_tenant_id"

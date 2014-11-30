@@ -91,10 +91,11 @@ class RentsController < ApplicationController
       @rented_square = @rents.collect { |r| r.square_meters }.inject { |a,b| a+b }
       @common_space = CommonSpace.current_at(date) 
       @number_rooms = RentableRoom.current_at(date)
+      @commons_share_sum = @rents.collect { |r| r.commons_share }.inject { |a,b| a+b }
     end
 
     def set_calc_contract_data(contract)
-      contract.total_square = contract.square_meters + @common_space/@rents.length.to_f
+      contract.total_square = contract.square_meters + @common_space*contract.commons_share.to_f/@commons_share_sum.to_f
       contract.heating_charges = (contract.total_square.to_f/@total_square * @needed_heating).round(2)
       contract.assessory_charges = (contract.total_square.to_f/@total_square * @needed_assessory).round(2)
     end

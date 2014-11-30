@@ -28,6 +28,10 @@
     <%= f.select("tenant_id", Tenant.all.collect {|t| [ TenantsHelper::label(t), t.id ] }, { include_blank: true }) %>
   </div>
   <div class="field">
+    <%= f.label :commons_share %><br>
+    <%= f.number_field :commons_share %>
+  </div>
+  <div class="field">
     <%= f.label :custom_heating %><br>
     <%= f.text_field :custom_heating %>
   </div>
