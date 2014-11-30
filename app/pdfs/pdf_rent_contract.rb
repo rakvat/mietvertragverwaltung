@@ -31,7 +31,11 @@ class PdfRentContract < Prawn::Document
     bounding_box [0, @column_y], width: @width/2.0 do
       text "1. Mieträume", style: :bold
       move_down BELOW_HEADER_HEIGHT
-      text @texts['rooms_location']
+      if contract.is_office
+        text @texts['office_location']
+      else
+        text @texts['rooms_location']
+      end
       move_down LINE_HEIGHT
       text contract.rooms.map { |r| RoomsHelper::label(r) }.join('; '), style: :bold
       text "Größe: #{contract.square_meters} m²", style: :bold
