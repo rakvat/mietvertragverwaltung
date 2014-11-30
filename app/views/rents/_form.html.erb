@@ -16,6 +16,10 @@
     <%= f.date_select :start %>
   </div>
   <div class="field">
+    <%= f.label "Previous Contract" %><br>
+    <%= f.select("previous_contract_id", Rent.all.collect {|r| [ "#{r.identifier} #{(r.tenant.nil? ? '' : (TenantsHelper::label(r.tenant)))}", r.id ] }, { include_blank: true }) %>
+  </div>
+  <div class="field">
     <%= f.label :basic_rent %><br>
     <%= f.text_field :basic_rent %>
   </div>

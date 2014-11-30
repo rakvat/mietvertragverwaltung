@@ -2,6 +2,7 @@ class Rent < ActiveRecord::Base
   has_many :rented_rooms
   has_many :rooms, through: :rented_rooms
   belongs_to :tenant
+  belongs_to :rents, class_name: :previous_rent
 
   attr_accessor :total_square, :heating_charges, :assessory_charges
 
@@ -55,11 +56,21 @@ class Rent < ActiveRecord::Base
     (heating.round(2) + assessory.round(2)).round(2)
   end
 
+  def previous_contract
+    unless self.previous_contract_id.nil?
+      Rent.find(self.previous_contract_id) 
+    end
+  end
+
   def sum_rent
     (self.basic_rent.round(2) + sum_assessory_charges.round(2)).round(2)
   end
 
   def square_meters
     rooms.inject(0) { |a,b| a + b.square_meters }
+  end
+
+  def identifier
+    "#{self.start.year}-#{self.start.month}/#{self.rooms.first.house.first}/#{self.rooms.first.number}"
   end
 end

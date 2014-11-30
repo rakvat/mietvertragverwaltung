@@ -6,6 +6,11 @@
 </p>
 
 <p>
+  <strong>Previous Contract:</strong>
+  <%= (@rent.previous_contract.identifier) unless @rent.previous_contract.nil? %>
+</p>
+
+<p>
   <strong>Basic rent:</strong>
   <%= @rent.basic_rent %>
 </p>

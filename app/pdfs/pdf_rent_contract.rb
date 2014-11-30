@@ -15,7 +15,11 @@ class PdfRentContract < Prawn::Document
                                            width: IMAGE_WITH
     text "M   I   E   T   V   E   R   T   R   A   G", size: 14, style: :bold
     move_down LINE_HEIGHT
-    text "Mietvertragnummer: #{contract.start.year}-#{contract.start.month}/#{contract.rooms.first.house.first}/#{contract.rooms.first.number}", size: 8
+    update = ''
+    unless contract.previous_contract.nil?
+      update =  "  –  aktualisiert Mietvertrag: #{contract.previous_contract.identifier} "
+    end
+    text "Mietvertragnummer: #{contract.identifier}#{update}", size: 8
     move_down 15
     text "Zwischen"
     move_down LINE_HEIGHT
